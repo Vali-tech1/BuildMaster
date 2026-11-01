@@ -1,56 +1,52 @@
-# Welcome to your Expo app 👋
+# BuildMaster
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Sistem inteligjent për menaxhimin e kompanive ndërtimore**
 
-## Get started
+BuildMaster është projekt universitar për një aplikacion mobil që synon t’i ndihmojë ekipet e projekteve ndërtimore të përcjellin punimet, të raportojnë aktivitetet ditore dhe të kenë pasqyrë më të qartë të shpenzimeve.
 
-1. Install dependencies
+## Problemi dhe hulumtimi
 
-   ```bash
-   npm install
-   ```
+Në tri intervista me një menaxher projekti, një përgjegjës kantieri dhe një pronar të kompanisë ndërtimore u përmendën vështirësi në përcjelljen e vazhdueshme të progresit, mungesë llogaridhënieje kur menaxheri nuk është në kantier, kohë e humbur në përgatitjen manuale të raporteve ditore dhe sfida në kontrollin e shpenzimeve të paplanifikuara. Intervistat theksuan gjithashtu dobinë e fotografive me raportet e punës dhe rëndësinë e transparencës financiare.
 
-2. Start the app
+Këto janë gjetje nga tri intervistat, jo pretendime për të gjitha kompanitë ndërtimore. Përgjigjet e plota gjenden te [BISEDAT.md](./BISEDAT.md).
 
-   ```bash
-   npx expo start
-   ```
+## Përdoruesit e synuar
 
-In the output, you'll find options to open the app in a
+- Menaxherët e projekteve ndërtimore
+- Përgjegjësit e kantierit
+- Pronarët e kompanive ndërtimore
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Qëllimi dhe MVP-ja
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Qëllimi i BuildMaster është ta bëjë më të lehtë ndjekjen e punëve në kantier dhe ndarjen e informacionit mes ekipit të projektit. MVP-ja e planifikuar përfshin:
 
-## Get a fresh project
+- Përcjelljen ditore të progresit të ndërtimit.
+- Raportimin e aktiviteteve ditore në kantier.
+- Bashkëngjitjen e fotografive në raportet e punimeve.
+- Historikun e progresit të projektit.
+- Pasqyrën e shpenzimeve të projektit, përfshirë shpenzimet e paplanifikuara të regjistruara.
 
-When you're ready, run:
+Këto pika përshkruajnë fushëveprimin e MVP-së, jo domosdoshmërisht funksione tashmë të implementuara. Në gjendjen aktuale të kodit, aplikacioni paraqet një pamje demonstrative me të dhëna statike të projektit; raportimi ditor, fotografitë dhe regjistrimi i shpenzimeve mbeten pjesë e MVP-së së planifikuar.
+
+## Funksionalitete të planifikuara për versionet e ardhshme
+
+- Ndihma e inteligjencës artificiale për përgatitjen e përshkrimeve të raporteve.
+- Gjenerimi i raporteve javore, mujore dhe vjetore.
+- Raportimi dhe analizimi financiar i avancuar.
+
+Këto funksionalitete janë ide për zhvillim të ardhshëm dhe nuk paraqiten si të implementuara në versionin fillestar.
+
+## Harta e produktit
+
+Shih [HARTA.md](./HARTA.md) për fushëveprimin e MVP-së dhe funksionalitetet e planifikuara.
+
+## Teknologjitë dhe nisja e aplikacionit
+
+Projekti përdor Expo, React Native, TypeScript dhe Expo Router.
+
+Për ta nisur aplikacionin:
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
