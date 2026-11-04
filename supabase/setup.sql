@@ -27,3 +27,12 @@ create policy "Public can read demo projects"
   for select
   to anon
   using (is_demo = true);
+
+drop policy if exists "Public can add demo projects" on public.projects;
+create policy "Public can add demo projects"
+  on public.projects
+  for insert
+  to anon
+  with check (is_demo = true);
+
+grant select, insert on public.projects to anon;

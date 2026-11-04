@@ -1,5 +1,18 @@
 import { supabase, supabaseConfigError } from "@/lib/supabase";
-import type { SupabaseProject } from "@/data/supabaseProject.types";
+import type {
+  ProjectStatus,
+  SupabaseProject,
+} from "@/data/supabaseProject.types";
+
+export type NewProject = {
+  name: string;
+  location: string | null;
+  description: string | null;
+  status: ProjectStatus;
+  progress: number;
+  budget: number;
+  expenses: number;
+};
 
 export async function getProjects(): Promise<SupabaseProject[]> {
   if (!supabase) {
@@ -9,6 +22,7 @@ export async function getProjects(): Promise<SupabaseProject[]> {
   const { data, error } = await supabase
     .from("projects")
     .select("*")
+    .eq("is_demo", true)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -29,10 +43,31 @@ export async function getProjectById(
     .from("projects")
     .select("*")
     .eq("id", id)
+    .eq("is_demo", true)
     .maybeSingle();
 
   if (error) {
     throw new Error(`Nuk u mor projekti nga Supabase: ${error.message}`);
+  }
+
+  return data;
+}
+
+export async function createProject(
+  project: NewProject,
+): Promise<SupabaseProject> {
+  if (!supabase) {
+    throw new Error(supabaseConfigError ?? "Supabase is not configured.");
+  }
+
+  const { data, error } = await supabase
+    .from("projects")
+    .insert({ ...project, is_demo: true })
+    .select("*")
+    .single();
+
+  if (error) {
+    throw new Error(`Projekti nuk u ruajt në Supabase: ${error.message}`);
   }
 
   return data;

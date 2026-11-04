@@ -47,11 +47,11 @@ Projekti përdor Expo, React Native, TypeScript, Expo Router dhe `@supabase/supa
 ### Konfigurimi i Supabase
 
 1. Në Supabase Dashboard të projektit ekzistues, kontrollo nëse `public.projects` ekziston dhe verifiko kolonat/politikat e saj para se të krijosh tabelë. Mos vazhdo pa përshtatur skriptet nëse tabela ka skemë tjetër ose nëse ka politika leximi më të gjera; politikat RLS lejuese bashkohen me OR.
-2. Nëse nuk ekziston, ose përputhet me skemën e demonstrimit, ekzekuto fillimisht `supabase/setup.sql` e pastaj `supabase/seed.sql` në SQL Editor. Skriptet krijojnë tabelën, aktivizojnë RLS, lejojnë lexim anonim vetëm të rreshtave `is_demo = true` dhe shtojnë pesë projekte fiktive pa dublikatë.
+2. Nëse nuk ekziston, ose përputhet me skemën e demonstrimit, ekzekuto `supabase/migrations/20261104120000_create_projects.sql` në SQL Editor, pastaj `supabase/seed.sql`. `supabase/setup.sql` është versioni i njëjtë i skemës për ekzekutim manual. Politikat lejojnë lexim dhe krijim anonim vetëm të rreshtave `is_demo = true`; nuk japin leje update/delete.
 3. Në `.env` lokal vendos çelësin publishable (ose legacy anon) të këtij projekti te `EXPO_PUBLIC_SUPABASE_ANON_KEY`. Në një klon të ri, përdor `.env.example` si model dhe vendos edhe URL-në e projektit. Mos përdor kurrë `service_role` ose çelës sekret në aplikacion; `.env` përjashtohet nga Git.
 4. Rinis Expo pas ndryshimit të `.env`. Për telefonin fizik, sigurohu që iPhone dhe kompjuteri janë në të njëjtin rrjet ose përdor `--tunnel`.
 
-Politika anon është vetëm për të dhëna fiktive demo. Para përdorimit real duhen autentikimi dhe politika aksesi sipas kompanisë; mos ekspozo të dhëna reale me leje publike.
+Politika anon është vetëm për të dhëna fiktive demo. Çdokush me aplikacionin/çelësin publik mund të shtojë rreshta demo; mos e përdor për të dhëna reale ose të ndjeshme. Para përdorimit real duhen autentikimi dhe politika aksesi sipas kompanisë. Ekzekutimi nga SQL Editor ose migrimi kërkon leje administratori të projektit.
 
 Për ta nisur aplikacionin:
 
