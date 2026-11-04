@@ -26,7 +26,7 @@ Qëllimi i BuildMaster është ta bëjë më të lehtë ndjekjen e punëve në k
 - Historikun e progresit të projektit.
 - Pasqyrën e shpenzimeve të projektit, përfshirë shpenzimet e paplanifikuara të regjistruara.
 
-Këto pika përshkruajnë fushëveprimin e MVP-së, jo domosdoshmërisht funksione tashmë të implementuara. Aplikacioni lexon projektet nga tabela `public.projects` në Supabase dhe shfaq statusin, progresin dhe financat. Tabela, politikat RLS dhe të dhënat shembull duhet të krijohen nga Supabase SQL Editor duke përdorur [supabase/setup.sql](./supabase/setup.sql). Raportimi ditor dhe bashkëngjitja e fotografive nuk janë implementuar ende.
+Këto pika përshkruajnë fushëveprimin e MVP-së, jo domosdoshmërisht funksione tashmë të implementuara. Aplikacioni lexon dhe shfaq projektet nga tabela `public.projects` në Supabase. Tabela, politikat RLS dhe pesë projektet fiktive u krijuan në projektin ekzistues Supabase më 4 nëntor 2026 dhe leximi anonim u verifikua. Raportimi ditor dhe bashkëngjitja e fotografive nuk janë implementuar ende.
 
 ## Funksionalitete të planifikuara për versionet e ardhshme
 
@@ -46,12 +46,11 @@ Projekti përdor Expo, React Native, TypeScript, Expo Router dhe `@supabase/supa
 
 ### Konfigurimi i Supabase
 
-1. Në Supabase Dashboard të projektit ekzistues, kontrollo nëse `public.projects` ekziston dhe verifiko kolonat/politikat e saj para se të krijosh tabelë. Mos vazhdo pa përshtatur skriptet nëse tabela ka skemë tjetër ose nëse ka politika leximi më të gjera; politikat RLS lejuese bashkohen me OR.
-2. Nëse nuk ekziston, ose përputhet me skemën e demonstrimit, ekzekuto `supabase/migrations/20261104120000_create_projects.sql` në SQL Editor, pastaj `supabase/seed.sql`. `supabase/setup.sql` është versioni i njëjtë i skemës për ekzekutim manual. Politikat lejojnë lexim dhe krijim anonim vetëm të rreshtave `is_demo = true`; nuk japin leje update/delete.
-3. Në `.env` lokal vendos çelësin publishable (ose legacy anon) të këtij projekti te `EXPO_PUBLIC_SUPABASE_ANON_KEY`. Në një klon të ri, përdor `.env.example` si model dhe vendos edhe URL-në e projektit. Mos përdor kurrë `service_role` ose çelës sekret në aplikacion; `.env` përjashtohet nga Git.
-4. Rinis Expo pas ndryshimit të `.env`. Për telefonin fizik, sigurohu që iPhone dhe kompjuteri janë në të njëjtin rrjet ose përdor `--tunnel`.
+1. Tabela `public.projects` u krijua, ndërsa pesë projektet demo u futën dhe u verifikuan në Supabase project `jypqnczqqgtaaocjlcao`. Për projekt të ri, kontrollo skemën/politikat para se të ekzekutosh `supabase/migrations/20261104120000_create_projects.sql` e pastaj `supabase/seed.sql`; politikat RLS lejuese bashkohen me OR. `supabase/setup.sql` është alternativë e skemës për SQL Editor.
+2. Në `.env` lokal, `EXPO_PUBLIC_SUPABASE_URL` dhe çelësi publishable (ose legacy anon) te `EXPO_PUBLIC_SUPABASE_ANON_KEY` duhet të jenë të vendosur. Në klon të ri përdor `.env.example` si model. Mos përdor kurrë `service_role` ose çelës sekret në aplikacion; `.env` përjashtohet nga Git.
+3. Rinis Expo pas ndryshimit të `.env`. Për telefonin fizik, sigurohu që iPhone dhe kompjuteri janë në të njëjtin rrjet ose përdor `--tunnel`.
 
-Politika anon është vetëm për të dhëna fiktive demo. Çdokush me aplikacionin/çelësin publik mund të shtojë rreshta demo; mos e përdor për të dhëna reale ose të ndjeshme. Para përdorimit real duhen autentikimi dhe politika aksesi sipas kompanisë. Ekzekutimi nga SQL Editor ose migrimi kërkon leje administratori të projektit.
+Politika anon është vetëm për të dhëna fiktive demo. Çdokush me aplikacionin/çelësin publik mund të shtojë rreshta demo; mos e përdor për të dhëna reale ose të ndjeshme. Para përdorimit real duhen autentikimi dhe politika aksesi sipas kompanisë. Në aplikacion mund të shtosh demo me butonin **“Shto projekt”**.
 
 Për ta nisur aplikacionin:
 
