@@ -11,11 +11,12 @@ BuildMaster's long-term goal is a useful product for real construction companies
 ## Current implementation (verified in code)
 
 - The app is an Expo / React Native / TypeScript project using Expo Router, currently on Expo SDK 58. Dependencies are managed with npm and `package-lock.json`.
-- `src/app/index.tsx` is a project overview screen with one sample project card and a small set of framework/tutorial articles.
-- `src/components/ConstructionProjectCard.tsx` presents sample project status, location, dates, manager, budget/expenses, progress, worker/task counts, navigation actions, and native share UI.
-- `src/app/projects/[section].tsx` provides details and financial overview screens backed by static demo data. Its daily-reports screen is an empty-state placeholder; creating or storing reports is not implemented.
-- `src/data/` contains the sample project and article data/types. `src/utils/construction-project.ts` contains display-formatting and calculation helpers. `src/app/artikull/[id].tsx` is an article detail screen.
-- The project has no backend, database, authentication, server API, persistent project storage, photo upload, daily-report creation, or expense entry. The project and financial figures are illustrative only. Do not describe planned functionality as implemented.
+- `src/app/index.tsx` fetches the project list from Supabase and displays loading, error, empty, retry, and pull-to-refresh states, followed by framework/tutorial articles.
+- `src/components/ConstructionProjectCard.tsx` displays each database project's name, location, status, progress, budget, expenses, remaining budget, and navigation actions.
+- `src/app/projects/[section].tsx` loads the selected project from Supabase for its details and financial screens. Its daily-reports screen is an empty-state placeholder; creating or storing reports is not implemented.
+- `src/lib/supabase.ts` validates Expo public environment variables and creates the typed Supabase client. `src/data/projects.ts` contains typed project queries. `src/data/supabaseProject.types.ts` defines the database model.
+- `supabase/setup.sql` and `supabase/seed.sql` are manual SQL Editor scripts, not executed migrations. They create `public.projects`, enable RLS, grant anonymous read access only to rows marked `is_demo`, and seed fictional records. Verify the existing database schema and RLS in the dashboard before running them.
+- The app uses the project's public URL and publishable/legacy anon key. Never add a `service_role` or secret key to the mobile app or commit `.env`. There is no authentication, company-specific access, project editing, photo upload, daily-report creation, or expense entry. Demo financial and progress values are fictional.
 - `src/app/_layout.tsx` defines the root Expo Router stack. Route screens belong in `src/app/`; reusable UI, data, types, and helpers belong outside the route directory.
 
 ## Product scope and direction
@@ -35,7 +36,7 @@ These are planned capabilities, not current app behavior. Later ideas include AI
 - Keep sample/demo data clearly labeled. Avoid hard-coding claims that imply live, shared, or persisted company data.
 - Build mobile-first, accessible screens that work across iOS, Android, and web. Preserve responsive layouts, safe-area handling, color-scheme support, and meaningful accessibility labels/roles.
 - Keep UI components focused and route-independent. Put new route screens under `src/app/`; keep reusable components, domain types, data access, and utilities in their existing source areas.
-- Maintain clear separation between presentation and data access. If persistence or a service layer is introduced, document the actual integration and handle loading, empty, and error states explicitly; do not invent endpoints or database tables.
+- Maintain clear separation between presentation and data access. Use the existing typed Supabase client and project queries; handle loading, empty, and error states explicitly. Do not invent endpoints or database tables.
 - Financial and progress calculations must be typed, predictable, and validated at the boundary. Preserve currency/date formatting conventions unless product requirements explicitly change.
 - Protect project, worker, and financial information in any future data integration. Implement authorization and auditability only when a real data/auth design is introduced; do not present them as existing features.
 - Prefer focused changes; do not add dependencies or unrelated scaffold. Update project documentation when actual functionality or architecture changes.
