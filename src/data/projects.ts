@@ -22,7 +22,6 @@ export async function getProjects(): Promise<SupabaseProject[]> {
   const { data, error } = await supabase
     .from("projects")
     .select("*")
-    .eq("is_demo", true)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -43,7 +42,6 @@ export async function getProjectById(
     .from("projects")
     .select("*")
     .eq("id", id)
-    .eq("is_demo", true)
     .maybeSingle();
 
   if (error) {
@@ -62,7 +60,7 @@ export async function createProject(
 
   const { data, error } = await supabase
     .from("projects")
-    .insert({ ...project, is_demo: true })
+    .insert(project)
     .select("*")
     .single();
 

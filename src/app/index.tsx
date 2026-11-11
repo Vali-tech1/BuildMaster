@@ -1,4 +1,5 @@
 import { ConstructionProjectCard } from "@/components/ConstructionProjectCard";
+import { ButoniDil } from "@/components/ButoniDil";
 import { artikujt } from "@/data/artikujt";
 import { createProject, getProjects } from "@/data/projects";
 import type { ProjectSection } from "@/data/constructionProject.types";
@@ -237,6 +238,7 @@ export default function Index() {
             <Text style={[styles.pershkrimi, isDark && styles.mutedDark]}>
               Përmbledhje e projekteve ndërtimore
             </Text>
+            <ButoniDil />
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, isDark && styles.textDark]}>
                 Projektet
@@ -317,8 +319,7 @@ export default function Index() {
                 Shto projekt të ri
               </Text>
               <Text style={[styles.formNotice, isDark && styles.mutedDark]}>
-                Demo publike: ky projekt do të jetë i dukshëm për këdo që ka
-                aplikacionin. Mos vendos të dhëna konfidenciale.
+                Projekti ruhet në Supabase; qasja kufizohet nga politikat RLS.
               </Text>
               <FormField
                 label="Emri i projektit *"

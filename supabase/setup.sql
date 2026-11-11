@@ -1,6 +1,7 @@
 -- Before running: check that public.projects does not already exist, or that its
--- columns and RLS policies are compatible with this demo schema. Review and
--- remove any broader pre-existing SELECT policy; permissive policies are ORed.
+-- columns are compatible with this schema. This setup intentionally grants no
+-- anonymous access; write and add the authenticated policies to
+-- j6-hyrja-rls.sql before expecting app queries to succeed.
 
 create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
@@ -22,17 +23,5 @@ create table if not exists public.projects (
 alter table public.projects enable row level security;
 
 drop policy if exists "Public can read demo projects" on public.projects;
-create policy "Public can read demo projects"
-  on public.projects
-  for select
-  to anon
-  using (is_demo = true);
-
 drop policy if exists "Public can add demo projects" on public.projects;
-create policy "Public can add demo projects"
-  on public.projects
-  for insert
-  to anon
-  with check (is_demo = true);
-
-grant select, insert on public.projects to anon;
+revoke all on table public.projects from anon;

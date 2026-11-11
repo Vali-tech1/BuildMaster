@@ -15,6 +15,7 @@ export type SupabaseProject = {
   expenses: number;
   created_at: string;
   is_demo: boolean;
+  pronari_id: string;
 };
 
 export type Database = {

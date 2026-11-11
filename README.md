@@ -26,7 +26,7 @@ Qëllimi i BuildMaster është ta bëjë më të lehtë ndjekjen e punëve në k
 - Historikun e progresit të projektit.
 - Pasqyrën e shpenzimeve të projektit, përfshirë shpenzimet e paplanifikuara të regjistruara.
 
-Këto pika përshkruajnë fushëveprimin e MVP-së, jo domosdoshmërisht funksione tashmë të implementuara. Aplikacioni lexon dhe shfaq projektet nga tabela `public.projects` në Supabase. Tabela, politikat RLS dhe pesë projektet fiktive u krijuan në projektin ekzistues Supabase më 4 nëntor 2026 dhe leximi anonim u verifikua. Raportimi ditor dhe bashkëngjitja e fotografive nuk janë implementuar ende.
+Këto pika përshkruajnë fushëveprimin e MVP-së, jo domosdoshmërisht funksione tashmë të implementuara. Aplikacioni lexon dhe shfaq projektet nga tabela `public.projects` në Supabase. Tabela dhe pesë projektet fiktive u krijuan në projektin ekzistues Supabase më 4 nëntor 2026. Aplikacioni tani kërkon llogari; qasja private e projekteve varet nga politikat RLS të hapit 6, të cilat ende duhen shkruar dhe aplikuar në Supabase. Raportimi ditor dhe bashkëngjitja e fotografive nuk janë implementuar ende.
 
 ## Funksionalitete të planifikuara për versionet e ardhshme
 
@@ -46,11 +46,13 @@ Projekti përdor Expo, React Native, TypeScript, Expo Router dhe `@supabase/supa
 
 ### Konfigurimi i Supabase
 
-1. Tabela `public.projects` u krijua, ndërsa pesë projektet demo u futën dhe u verifikuan në Supabase project `jypqnczqqgtaaocjlcao`. Për projekt të ri, kontrollo skemën/politikat para se të ekzekutosh `supabase/migrations/20261104120000_create_projects.sql` e pastaj `supabase/seed.sql`; politikat RLS lejuese bashkohen me OR. `supabase/setup.sql` është alternativë e skemës për SQL Editor.
-2. Në `.env` lokal, `EXPO_PUBLIC_SUPABASE_URL` dhe çelësi publishable (ose legacy anon) te `EXPO_PUBLIC_SUPABASE_ANON_KEY` duhet të jenë të vendosur. Në klon të ri përdor `.env.example` si model. Mos përdor kurrë `service_role` ose çelës sekret në aplikacion; `.env` përjashtohet nga Git.
-3. Rinis Expo pas ndryshimit të `.env`. Për telefonin fizik, sigurohu që iPhone dhe kompjuteri janë në të njëjtin rrjet ose përdor `--tunnel`.
+1. Tabela `public.projects` u krijua, ndërsa pesë projektet demo u futën dhe u verifikuan në Supabase project `jypqnczqqgtaaocjlcao`. Migrimi `supabase/migrations/20261104120000_create_projects.sql` pasqyron konfigurimin e javës 5 dhe krijon qasje anon; mos e ekzekuto sërish pas kalimit te hyrja. `supabase/setup.sql` krijon tabelën pa qasje anon, por kërkon politikat e autentikuara para se aplikacioni të lexojë/shkruajë.
+2. Në `.env` lokal, `EXPO_PUBLIC_SUPABASE_URL` dhe çelësi publishable (ose legacy anon) te `EXPO_PUBLIC_SUPABASE_ANON_KEY` duhet të jenë të vendosur. Në klon të ri përdor `.env.example` si model. Mos përdor kurrë çelësin sekret (admin) në aplikacion; .env përjashtohet nga Git.
+3. Për testim me llogari sintetike, çaktivizo përkohësisht **Confirm email** te Supabase → Authentication → Sign In / Providers → Email. Aktivizoje sërish para përdoruesve realë. Rinis Expo pas ndryshimit të `.env`; për telefonin fizik, sigurohu që telefoni dhe kompjuteri janë në të njëjtin rrjet ose përdor `--tunnel`.
 
-Politika anon është vetëm për të dhëna fiktive demo. Çdokush me aplikacionin/çelësin publik mund të shtojë rreshta demo; mos e përdor për të dhëna reale ose të ndjeshme. Para përdorimit real duhen autentikimi dhe politika aksesi sipas kompanisë. Në aplikacion mund të shtosh demo me butonin **“Shto projekt”**.
+4. Ndiq `supabase/j6-hyrja-rls.sql`: zëvendëso email-in shembull me llogarinë që do të marrë rreshtat ekzistues. Shkruaj vetë politikat SELECT, INSERT dhe UPDATE për `authenticated` me `auth.uid()` përpara se ta ekzekutosh. Pa to, aplikacioni duhet të marrë `permission denied` dhe nuk do të lexojë rreshta. Rreshtat e rinj nuk dërgojnë `pronari_id`; baza e vendos atë.
+
+Autentikimi, sesioni i ruajtur lokalisht dhe hyrja/dalja janë implementuar. Nuk ka autorizim sipas kompanisë, role përdoruesish, raporte ditore ose ngarkim fotografish.
 
 Për ta nisur aplikacionin:
 
